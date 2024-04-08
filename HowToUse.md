@@ -43,9 +43,8 @@ Before getting started, ensure you have the following:
    - Search for "esp32" and install the "ESP32 by Espressif Systems" package
 
 2. Clone the project repository:
-   ```
-   git clone https://github.com/xboosty/voice-controlled-audio-player.git
-   ```
+
+git clone https://github.com/xboosty/voice-controlled-audio-player.git
 
 3. Open the `esp32_firmware/esp32_firmware.ino` file in the Arduino IDE.
 
@@ -56,7 +55,7 @@ Before getting started, ensure you have the following:
 5. Set up the Azure OpenAI GPT-4 resource:
    - Create an Azure OpenAI resource in the Azure portal
    - Obtain the API key and endpoint for your Azure OpenAI resource
-   - Update the `openaiEndpoint` and `openaiApiKey` variables in the `azure_functions/openai_api/__init__.py` file with your API key and endpoint
+   - Update the `openai.api_key` and `openai.api_base` variables in the `azure_functions/openai_api/__init__.py` file with your API key and endpoint
 
 6. Deploy the Azure Functions code:
    - Install the Azure Functions Core Tools
@@ -67,7 +66,7 @@ Before getting started, ensure you have the following:
      ```
      Replace `<your-function-app-name>` with the name of your Azure Functions app
 
-7. Update the `web_interface/script.js` file with the URL of your deployed Azure Functions app.
+7. Update the `processAudioWithOpenAI` function in the `web_interface/script.js` file with the URL of your deployed Azure Functions app.
 
 ## Usage
 
@@ -77,21 +76,25 @@ Before getting started, ensure you have the following:
 
 3. Click the "Upload" button to flash the firmware to the ESP32 board.
 
-4. Once the upload is complete, open the Serial Monitor to view the device's IP address.
+4. Once the upload is complete, the device will automatically connect to Wi-Fi and be ready to use.
 
-5. Access the web interface by entering the IP address in a web browser.
+5. Press the button connected to the ESP32 to start recording audio.
 
-6. Use the web interface to:
-   - Upload WAV files for playback
-   - Record audio using the connected microphone
-   - View the transcribed text and generated responses from Azure OpenAI GPT-4
+6. Speak your question or command clearly into the microphone.
 
-7. Interact with the audio player using voice commands. The device will process the audio, send it to Azure OpenAI GPT-4 for transcription and response generation, and play back the generated audio response.
+7. Release the button to stop recording.
+
+8. The recorded audio will be saved to the SD card and sent to the Azure OpenAI GPT-4 API for processing.
+
+9. The generated response from Azure OpenAI GPT-4 will be received by the ESP32.
+
+10. The response audio will be saved to the SD card and played back through the connected speaker.
 
 ## Troubleshooting
 
 - If the device fails to connect to Wi-Fi, double-check the Wi-Fi credentials in the code and ensure your network is accessible.
-- If the audio playback or recording is not working, verify the connections between the ESP32, microphone, amplifier, and speaker.
+- If the audio recording or playback is not working, verify the connections between the ESP32, microphone, amplifier, and speaker.
 - If the Azure OpenAI GPT-4 integration is not functioning properly, ensure the API key and endpoint are correctly set in the `azure_functions/openai_api/__init__.py` file and that your Azure OpenAI resource is active.
+- Check the Serial Monitor in the Arduino IDE for any error messages or debugging information.
 
 For additional support or to report issues, please visit the project's GitHub repository: [https://github.com/xboosty/voice-controlled-audio-player](https://github.com/xboosty/voice-controlled-audio-player)
