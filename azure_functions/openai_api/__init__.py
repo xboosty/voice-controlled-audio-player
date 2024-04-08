@@ -9,32 +9,55 @@ openai.api_base = "https://azureopenaiinstancemcjb.openai.azure.com/"
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    # Get the audio file from the request
-    audio_file = req.files.get('audio')
+    # Get the user's request from the query parameters
+    user_request = req.params.get('request')
 
-    if not audio_file:
-        return func.HttpResponse("No audio file provided.", status_code=400)
+    if not user_request:
+        return func.HttpResponse("No user request provided.", status_code=400)
 
-    # Save the audio file temporarily
-    audio_file_path = "/tmp/audio.wav"
-    audio_file.save(audio_file_path)
+    # Initialize the conversation history
+    conversation_history = [
+        {"role": "system", "content": "You are an AI assistant that continuously asks questions to engage the user in a conversation."},
+        {"role": "user", "content": user_request}
+    ]
 
-    # Process the audio file with Azure OpenAI
-    with open(audio_file_path, "rb") as audio:
-        transcript = openai.Audio.transcribe("whisper-1", audio)
+    # Generate questions and responses using Azure OpenAI GPT-4
+    while True:
+        response = openai.ChatCompletion.create(
+            engine="gpt-4",
+            messages=conversation_history,
+            max_tokens=100,
+            n=1,
+            stop=None,
+            temperature=0.7,
+        )
 
-    # Generate a response using Azure OpenAI
-    prompt = f"Transcription: {transcript}\nPlease provide a response."
-    response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=prompt,
-        max_tokens=100,
-        n=1,
-        stop=None,
-        temperature=0.7,
-    )
+        # Get the generated question or response
+        assistant_response = response.choices[0].message.content.strip()
 
-    # Get the generated response
-    generated_response = response.choices[0].text.strip()
+        # Add the assistant's response to the conversation history
+        conversation_history.append({"role": "assistant", "content": assistant_response})
 
-    return func.HttpResponse(generated_response)
+        # Check if the assistant's response is a question
+        if assistant_response.endswith("?"):
+            # Return the question to the user
+            return func.HttpResponse(assistant_response)
+        else:
+            # Generate a follow-up question
+            follow_up_question = openai.ChatCompletion.create(
+                engine="gpt-4",
+                messages=conversation_history + [{"role": "user", "content": "Can you ask a follow-up question?"}],
+                max_tokens=50,
+                n=1,
+                stop=None,
+                temperature=0.7,
+            )
+
+            # Get the generated follow-up question
+            follow_up_question_text = follow_up_question.choices[0].message.content.strip()
+
+            # Add the follow-up question to the conversation history
+            conversation_history.append({"role": "assistant", "content": follow_up_question_text})
+
+            # Return the follow-up question to the user
+            return func.HttpResponse(follow_up_question_text)
