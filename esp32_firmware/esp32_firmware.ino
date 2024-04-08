@@ -7,7 +7,7 @@
 
 const char* ssid = "your_wifi_ssid";
 const char* password = "your_wifi_password";
-const char* azureFunctionsEndpoint = "your_azure_functions_endpoint";
+const char* azureFunctionsEndpoint = "https://projectdoohickyfunctionapp.azurewebsites.net/api/openai_api";
 
 AudioGeneratorMP3 *mp3;
 AudioFileSourceHTTPStream *file;

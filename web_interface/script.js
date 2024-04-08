@@ -76,7 +76,7 @@ function handleFileUpload(event) {
   
   // Function to send audio to Azure OpenAI GPT-4 for processing
   function processAudioWithOpenAI(audioUrl) {
-    fetch('/process', {
+    fetch('https://projectdoohickyfunctionapp.azurewebsites.net/api/openai_api', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
