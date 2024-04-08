@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .upload-section, .audio-section, .recording-section, .response-section {
+    margin-bottom: 20px;
+  }
+  
+  #fileInput {
+    margin-bottom: 10px;
+  }
+  
+  #audioList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #audioList li {
+    margin-bottom: 10px;
+  }
+  
+  #recordButton {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  #recordingStatus {
+    margin-top: 10px;
+  }
+  
+  #openaiResponse {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+  }
