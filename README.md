@@ -98,7 +98,3 @@ We have exciting plans for future enhancements to Project Doohicky, including:
 - Offline processing capabilities for enhanced privacy and reduced latency.
 
 Stay tuned for updates and new releases as we continue to improve and expand the capabilities of Project Doohicky.
-
-Citations:
-[1] https://github.com/xboosty/voice-controlled-audio-player.git
-[2] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/9693947/c75683b6-a077-449c-98fa-9f6596345d34/paste.txt
