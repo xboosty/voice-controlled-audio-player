@@ -1,12 +1,14 @@
 from flask import Flask, request, jsonify, render_template
 import os
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key="your_openai_api_key")
 import whisper
 
 app = Flask(__name__)
 
 # Set up OpenAI API key
-openai.api_key = "your_openai_api_key"
+
 
 # Set up Whisper model
 model = whisper.load_model("base")
@@ -40,14 +42,12 @@ def gpt4():
 
     # Generate a response using OpenAI GPT-4
     prompt = f"Transcription: {transcription}\nPlease provide a response."
-    response = openai.Completion.create(
-        engine='text-davinci-002',
-        prompt=prompt,
-        max_tokens=100,
-        n=1,
-        stop=None,
-        temperature=0.7
-    )
+    response = client.completions.create(engine='text-davinci-002',
+    prompt=prompt,
+    max_tokens=100,
+    n=1,
+    stop=None,
+    temperature=0.7)
 
     gpt4_response = response.choices[0].text.strip()
 

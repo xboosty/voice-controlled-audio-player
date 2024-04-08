@@ -1,10 +1,14 @@
 import logging
 import azure.functions as func
 import openai
+from openai import OpenAI
+
+client = OpenAI(api_key="7a09ef8e60b74b6e9a108c2a5f4277c5")
 
 # Set up OpenAI API key and endpoint
-openai.api_key = "7a09ef8e60b74b6e9a108c2a5f4277c5"
-openai.api_base = "https://azureopenaiinstancemcjb.openai.azure.com/"
+
+# TODO: The 'openai.api_base' option isn't read in the client API. You will need to pass it when you instantiate the client, e.g. 'OpenAI(api_base="https://azureopenaiinstancemcjb.openai.azure.com/")'
+# openai.api_base = "https://azureopenaiinstancemcjb.openai.azure.com/"
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -23,14 +27,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     # Generate questions and responses using Azure OpenAI GPT-4
     while True:
-        response = openai.ChatCompletion.create(
-            engine="gpt-4",
-            messages=conversation_history,
-            max_tokens=100,
-            n=1,
-            stop=None,
-            temperature=0.7,
-        )
+        response = client.chat.completions.create(engine="gpt-4",
+        messages=conversation_history,
+        max_tokens=100,
+        n=1,
+        stop=None,
+        temperature=0.7)
 
         # Get the generated question or response
         assistant_response = response.choices[0].message.content.strip()
@@ -44,14 +46,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             return func.HttpResponse(assistant_response)
         else:
             # Generate a follow-up question
-            follow_up_question = openai.ChatCompletion.create(
-                engine="gpt-4",
-                messages=conversation_history + [{"role": "user", "content": "Can you ask a follow-up question?"}],
-                max_tokens=50,
-                n=1,
-                stop=None,
-                temperature=0.7,
-            )
+            follow_up_question = client.chat.completions.create(engine="gpt-4",
+            messages=conversation_history + [{"role": "user", "content": "Can you ask a follow-up question?"}],
+            max_tokens=50,
+            n=1,
+            stop=None,
+            temperature=0.7)
 
             # Get the generated follow-up question
             follow_up_question_text = follow_up_question.choices[0].message.content.strip()
