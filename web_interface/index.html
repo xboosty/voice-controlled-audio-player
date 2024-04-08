@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Voice-Controlled Audio Player</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Voice-Controlled Audio Player</h1>
+    <div class="upload-section">
+      <h2>Upload Audio</h2>
+      <form id="uploadForm">
+        <input type="file" id="fileInput" accept=".wav">
+        <button type="submit">Upload</button>
+      </form>
+    </div>
+    <div class="audio-section">
+      <h2>Recorded Audio</h2>
+      <ul id="audioList"></ul>
+    </div>
+    <div class="recording-section">
+      <h2>Record Audio</h2>
+      <button id="recordButton">Record</button>
+      <div id="recordingStatus"></div>
+    </div>
+    <div class="response-section">
+      <h2>Azure OpenAI GPT-4 Response</h2>
+      <div id="openaiResponse"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
