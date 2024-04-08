@@ -60,12 +60,3 @@ For any questions or inquiries, please contact:
 
 ## Acknowledgments
 We would like to thank the open-source community for their valuable contributions and the developers of the libraries and frameworks used in this project.
-
----
-
-This README.md file provides an overview of Project Doohicky, including its features, hardware and software components, getting started instructions, project structure, contributing guidelines, license information, and contact details.
-
-Feel free to customize and expand upon this README.md file based on your specific project requirements and additional information you want to include.
-
-Citations:
-[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/9693947/c75683b6-a077-449c-98fa-9f6596345d34/paste.txt
