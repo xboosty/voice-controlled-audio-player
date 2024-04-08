@@ -1,4 +1,4 @@
-## Apr 8 9:32 AM
+## Apr 8 9:32 AM Mario
 This updated HowToUse.md file includes the necessary steps to set up and use the voice-controlled audio player with the ESP32, INMP441 microphone, MAX98357A amplifier, and Azure OpenAI GPT-4 integration. It covers the hardware setup, software setup, usage instructions, and troubleshooting tips.
 Make sure to replace <your-function-app-name> with the actual name of your deployed Azure Functions app in the deployment step
 
