@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Local Testing - Audio Transcription and GPT-4 Response</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <div class="container">
@@ -21,6 +20,34 @@
       <div id="gpt4Response"></div>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#uploadForm').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData();
+        formData.append('audio', $('#fileInput')[0].files[0]);
+        $.ajax({
+          url: '/transcribe',
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            $('#transcription').text(response.transcription);
+            $.ajax({
+              url: '/gpt4',
+              type: 'POST',
+              data: JSON.stringify({ transcription: response.transcription }),
+              contentType: 'application/json',
+              success: function(response) {
+                $('#gpt4Response').text(response.response);
+              }
+            });
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
