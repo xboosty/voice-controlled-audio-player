@@ -1,0 +1,5 @@
+# Ignore build artifacts and IDE files
+build/
+.vscode/
+.pio/
+*.code-workspace
